@@ -1,4 +1,4 @@
-package bai_tap.bai01;
+package bai_tap.bai01_del_index;
 
 import java.util.Scanner;
 
