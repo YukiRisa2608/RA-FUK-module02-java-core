@@ -20,16 +20,13 @@ public class Circle {
     public String getColor() {
         return color;
     }
-
     public double getR() {
         return r;
     }
-
     // Setter
     public void setR(double r) {
         this.r = r;
     }
-
     public void setColor(String color) {
         this.color = color;
     }
