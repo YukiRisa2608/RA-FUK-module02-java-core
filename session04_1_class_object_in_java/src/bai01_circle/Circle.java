@@ -1,15 +1,21 @@
 package bai01_circle;
 
 import java.util.Scanner;
-
+//Xây dựng lớp Circle gồm các thuộc tính : Bán kính và Màu sắc. các phương thức khởi tạo (constructor) 0 tham số và có tham số, các phương thức getter và setter, phương thức chuVi() trả về chu vi của hình tròn , phương thức dienTich() trả về diện tích hình tròn ,phương thức inputData() cho phép người dùng nhập vào toàn bộ thông tin của đối tượng, phương thức displayData() cho phép hiển thị toàn bộ thông tin các thuộc tính.
+//Yêu cầu vẽ biểu đồ lớp Circle trước khi triển khai.
+//Hướng dẫn
+//Bước 1: Tạo lớp Circle, khai báo các thuộc tính (properties), định nghĩa các phương thức khởi tạo (constructors).
+//Bước 2: Tạo lớp Main chưa phương thức main() để chạy chương trình.
+//Bước 3: Trong lớp Main , khởi tạo các đối tượng hình tròn với bán kính khác nhau, tính chu vi và diện tích của các hình đó.
+//Bước 4: Chạy chương trình và quan sát kết quả.
 public class Circle {
-    double r;
-    String color;
+    private double r;
+    private String color;
     //constructor khồng có tham số
     public Circle() {
         //Đặt giá trị mặc định
-        r = 0;
-        color = "white";
+        this.r = 0;
+        this.color = "white";
     }
     //constructor có tham số
     public Circle(double r, String color) {
@@ -37,7 +43,7 @@ public class Circle {
         System.out.println("Input radius of circle");
         double newRadius = scanner.nextDouble();
         this.setR(newRadius);
-        scanner.nextLine();// Đọc dòng mới để loại bỏ ký tự xuống dòng
+        scanner.nextLine();// Đọc dòng mới tránh nuốt dòng
         System.out.println("Input color of circle");
         String newColor = scanner.nextLine();
         this.setColor(newColor);
