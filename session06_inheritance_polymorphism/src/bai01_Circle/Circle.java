@@ -29,6 +29,6 @@ public class Circle {
 
     @Override
     public String toString() {
-        return String.format(" radius = %f, color = %s, area = %f", radius, color, getArea());
+        return String.format(" radius = %.2f, color = %s, area = %.2f", radius, color, getArea());
     }
 }

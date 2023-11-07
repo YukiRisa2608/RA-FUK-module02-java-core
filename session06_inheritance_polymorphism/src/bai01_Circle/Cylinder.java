@@ -23,6 +23,6 @@ public class Cylinder extends Circle {
 
     @Override
     public String toString() {
-        return String.format("radius %f, color %s, height %f, area %f, volume %f", getRadius(), getColor(), height, getArea(), getVolume());
+        return String.format("radius = %.2f, color = %s, height = %.2f, area = %.2f, volume = %.2f", getRadius(), getColor(), height, getArea(), getVolume());
     }
 }

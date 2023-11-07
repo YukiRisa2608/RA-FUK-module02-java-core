@@ -13,17 +13,21 @@ public class Test_Triangle {
 //Bước 1: Viết mã triển khai và mã kiểm thử cho lớp Shape tại hàm main()
         System.out.println("Input color of shape");
         String shapeColor = scanner.nextLine();
+
         Shape shape = new Shape(shapeColor);
         System.out.println("Shape: " + shape);
         System.out.println("______________");
 //Bước 2: Viết mã triển khai và mã kiểm thử cho lớp Triangle tại hàm main()
         System.out.println("Input side1 of triangle");
         double side1 = scanner.nextDouble();
+
         System.out.println("Input side2 of triangle");
         double side2 = scanner.nextDouble();
+
         System.out.println("Input side3 of triangle");
         double side3 = scanner.nextDouble();
         scanner.nextLine();
+
         System.out.println("Input color of triangle");
         String triangleColor = scanner.nextLine();
 
