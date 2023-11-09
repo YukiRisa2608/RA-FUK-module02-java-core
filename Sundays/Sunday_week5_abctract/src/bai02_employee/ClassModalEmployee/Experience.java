@@ -1,6 +1,4 @@
-package bai02_employee;
-
-import java.sql.Date;
+package bai02_employee.ClassModalEmployee;
 
 //Đối với nhân viên Experience có thêm thuộc tính: Số năm kinh nghiệm (expInYear),
 //Kỹ năng chuyên môn (ProSkill)

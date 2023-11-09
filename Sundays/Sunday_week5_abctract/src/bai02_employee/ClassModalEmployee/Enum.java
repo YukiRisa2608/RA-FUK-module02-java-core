@@ -1,4 +1,4 @@
-package bai02_employee;
+package bai02_employee.ClassModalEmployee;
 
 public class Enum {
     public enum EmployeeType {

@@ -1,10 +1,8 @@
-package bai02_employee;
-
-import java.sql.Date;
+package bai02_employee.ClassModalEmployee;
 
 //Đối với nhân viên Intern có thêm thuộc tính: Chuyên ngành đang học (majors), Học
 //kì đang học (semester), Tên trường đang học (universityName)
-public class Intern extends Employee{
+public class Intern extends Employee {
     private String major;
     private Enum.Semester semester;
     private String universityName;

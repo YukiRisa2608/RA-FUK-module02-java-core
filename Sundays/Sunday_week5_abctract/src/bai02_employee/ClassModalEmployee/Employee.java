@@ -1,8 +1,6 @@
-package bai02_employee;
+package bai02_employee.ClassModalEmployee;
 
-import java.sql.Date;
 import java.util.ArrayList;
-import java.util.List;
 
 //Tất cả các Employee đều có các thuộc tính và phương thức là:
 //- ID

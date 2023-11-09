@@ -1,10 +1,8 @@
-package bai02_employee;
-
-import java.util.Date;
+package bai02_employee.ClassModalEmployee;
 
 //Đối với nhân viên Fresher có thêm thuộc tính: Thời gian tốt nghiệp(graduationDate),
 //Xếp loại tốt nghiệp (graduationRank) , Trường tốt nghiệp (Education)
-public class Fresher extends Employee{
+public class Fresher extends Employee {
     private String graduationDate;
     private Enum.GraduationRank graduationRank;
     private String graduateSchool;
