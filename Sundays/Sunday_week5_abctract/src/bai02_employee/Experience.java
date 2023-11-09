@@ -16,8 +16,8 @@ public class Experience extends Employee {
         this.proSkill = proSkill;
     }
 
-    public Experience(int id, String name, Date birthDay, int phone, String email, Enum.EmployeeType type, int expInYear, String proSkill) {
-        super(id, name, birthDay, phone, email, type);
+    public Experience(int id, String name, String birthDay, String phone, String email, Enum.EmployeeType employeeType, int expInYear, String proSkill) {
+        super(id, name, birthDay, phone, email, employeeType);
         this.expInYear = expInYear;
         this.proSkill = proSkill;
     }
@@ -39,8 +39,8 @@ public class Experience extends Employee {
     }
 
     @Override
-    public void addCertificates(Certificate certificate) {
-        super.addCertificates(certificate);
+    public void addCertificates(int certificatedId, String certificatedName, String certificateRank, String certificateDate) {
+        super.addCertificates(certificatedId, certificatedName, certificateRank, certificateDate);
     }
 
     @Override

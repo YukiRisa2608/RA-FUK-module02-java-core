@@ -7,27 +7,27 @@ import java.util.Date;
 //(Certificate)
 //Với mỗi bằng cấp có các thông tin bao gồm : certificatedID, certificateName, certificateRank,certificatedDate.
 public class Certificate {
-    private int certificatedID;
+    private int certificatedId;
     private String certificateName;
     private String certificateRank;
-    private Date certificateDate;
+    private String certificateDate;
 
     public Certificate() {
     }
 
-    public Certificate(int certificatedID, String certificateName, String certificateRank, Date certificateDate) {
-        this.certificatedID = certificatedID;
+    public Certificate(int certificatedId, String certificateName, String certificateRank, String certificateDate) {
+        this.certificatedId = certificatedId;
         this.certificateName = certificateName;
         this.certificateRank = certificateRank;
         this.certificateDate = certificateDate;
     }
 
     public int getCertificatedID() {
-        return certificatedID;
+        return certificatedId;
     }
 
-    public void setCertificatedID(int certificatedID) {
-        this.certificatedID = certificatedID;
+    public void setCertificatedID(int certificatedId) {
+        this.certificatedId = certificatedId;
     }
 
     public String getCertificateName() {
@@ -46,11 +46,11 @@ public class Certificate {
         this.certificateRank = certificateRank;
     }
 
-    public Date getCertificateDate() {
+    public String getCertificateDate() {
         return certificateDate;
     }
 
-    public void setCertificateDate(Date certificateDate) {
+    public void setCertificateDate(String certificateDate) {
         this.certificateDate = certificateDate;
     }
 }

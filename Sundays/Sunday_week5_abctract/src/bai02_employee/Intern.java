@@ -18,7 +18,7 @@ public class Intern extends Employee{
         this.universityName = universityName;
     }
 
-    public Intern(int id, String name, Date birthDay, int phone, String email, Enum.EmployeeType employeeType, String majors, Enum.Semester semester, String universityName) {
+    public Intern(int id, String name, String birthDay, String phone, String email, Enum.EmployeeType employeeType, String majors, Enum.Semester semester, String universityName) {
         super(id, name, birthDay, phone, email, employeeType);
         this.major = majors;
         this.semester = semester;
@@ -50,8 +50,8 @@ public class Intern extends Employee{
     }
 
     @Override
-    public void addCertificates(Certificate certificate) {
-        super.addCertificates(certificate);
+    public void addCertificates(int certificatedId, String certificatedName, String certificateRank, String certificateDate) {
+        super.addCertificates(certificatedId, certificatedName, certificateRank, certificateDate);
     }
 
     @Override

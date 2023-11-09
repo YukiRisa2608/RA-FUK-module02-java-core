@@ -23,17 +23,17 @@ import java.util.List;
 public abstract class Employee {
     private int id;
     private String name;
-    private Date birthDay;
-    private int phone;
+    private String birthDay;
+    private String phone;
     private String email;
     private Enum.EmployeeType employeeType;
-    private List<Certificate> certificates;
+    private ArrayList<Certificate> certificates;
     private static int employee_count = 0;
 
     public Employee() {
     }
 
-    public Employee(int id, String name, Date birthDay, int phone, String email, Enum.EmployeeType employeeType) {
+    public Employee(int id, String name, String birthDay, String phone, String email, Enum.EmployeeType employeeType) {
         this.id = id;
         this.name = name;
         this.birthDay = birthDay;
@@ -43,7 +43,8 @@ public abstract class Employee {
         this.certificates = new ArrayList<>();
         employee_count++;
     }
-    public void addCertificates(Certificate certificate) {
+    public void addCertificates(int certificatedId, String certificatedName, String certificateRank, String certificateDate) {
+        Certificate certificate = new Certificate (certificatedId, certificatedName, certificateRank, certificateDate);
         certificates.add(certificate);
     }
 
@@ -63,19 +64,19 @@ public abstract class Employee {
         this.name = name;
     }
 
-    public Date getBirthDay() {
+    public String getBirthDay() {
         return birthDay;
     }
 
-    public void setBirthDay(Date birthDay) {
+    public void setBirthDay(String birthDay) {
         this.birthDay = birthDay;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
