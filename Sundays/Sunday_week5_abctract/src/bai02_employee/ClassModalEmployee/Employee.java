@@ -1,6 +1,7 @@
 package bai02_employee.ClassModalEmployee;
 
 import java.util.ArrayList;
+import java.util.List;
 
 //Tất cả các Employee đều có các thuộc tính và phương thức là:
 //- ID
@@ -18,20 +19,20 @@ import java.util.ArrayList;
 //employeeCount dùng để người dùng đếm số lượng nhân viên trong một đợt người dùng nhập
 //nhân viên mới vào cơ sở dữ liệu. (mỗi lần người dùng nhập thêm mới nhân viên thì thuộc tính
 //employeeCount của class Employee sẽ tăng lên 1)
-public abstract class Employee {
+public class Employee {
     private int id;
     private String name;
     private String birthDay;
     private String phone;
     private String email;
-    private Enum.EmployeeType employeeType;
-    private ArrayList<Certificate> certificates;
+    private String employeeType;
+    private List<Certificate> certificates;
     private static int employee_count = 0;
 
     public Employee() {
     }
 
-    public Employee(int id, String name, String birthDay, String phone, String email, Enum.EmployeeType employeeType) {
+    public Employee(int id, String name, String birthDay, String phone, String email, String employeeType, List<Certificate> certificates) {
         this.id = id;
         this.name = name;
         this.birthDay = birthDay;
@@ -41,11 +42,9 @@ public abstract class Employee {
         this.certificates = new ArrayList<>();
         employee_count++;
     }
-    public void addCertificates(int certificatedId, String certificatedName, String certificateRank, String certificateDate) {
-        Certificate certificate = new Certificate (certificatedId, certificatedName, certificateRank, certificateDate);
+    public void addCertificate(Certificate certificate) {
         certificates.add(certificate);
     }
-
     public int getId() {
         return id;
     }
@@ -86,12 +85,16 @@ public abstract class Employee {
         this.email = email;
     }
 
-    public Enum.EmployeeType getEmployeeType() {
+    public String getEmployeeType() {
         return employeeType;
     }
 
-    public void setType(Enum.EmployeeType employeeType) {
+    public void setType(String employeeType) {
         this.employeeType = employeeType;
+    }
+
+    public List<Certificate> getCertificates() {
+        return certificates;
     }
 
     public static int getEmployee_count() {
@@ -116,4 +119,5 @@ public abstract class Employee {
             System.out.println("Certificate Date: " + certificate.getCertificateDate());
         }
     }
+
 }

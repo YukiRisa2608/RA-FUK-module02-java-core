@@ -1,5 +1,7 @@
 package bai02_employee.ClassModalEmployee;
 
+import java.util.List;
+
 //Đối với nhân viên Experience có thêm thuộc tính: Số năm kinh nghiệm (expInYear),
 //Kỹ năng chuyên môn (ProSkill)
 public class Experience extends Employee {
@@ -14,11 +16,12 @@ public class Experience extends Employee {
         this.proSkill = proSkill;
     }
 
-    public Experience(int id, String name, String birthDay, String phone, String email, Enum.EmployeeType employeeType, int expInYear, String proSkill) {
-        super(id, name, birthDay, phone, email, employeeType);
+    public Experience(int id, String name, String birthDay, String phone, String email, String employeeType, List<Certificate> certificates, int expInYear, String proSkill) {
+        super(id, name, birthDay, phone, email, employeeType, certificates);
         this.expInYear = expInYear;
         this.proSkill = proSkill;
     }
+
 
     public int getExpInYear() {
         return expInYear;
@@ -36,9 +39,10 @@ public class Experience extends Employee {
         this.proSkill = proSkill;
     }
 
+
     @Override
-    public void addCertificates(int certificatedId, String certificatedName, String certificateRank, String certificateDate) {
-        super.addCertificates(certificatedId, certificatedName, certificateRank, certificateDate);
+    public void addCertificate(Certificate certificate) {
+        super.addCertificate(certificate);
     }
 
     @Override

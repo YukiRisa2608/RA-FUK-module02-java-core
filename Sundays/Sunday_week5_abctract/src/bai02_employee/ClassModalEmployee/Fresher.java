@@ -1,23 +1,25 @@
 package bai02_employee.ClassModalEmployee;
 
+import java.util.List;
+
 //Đối với nhân viên Fresher có thêm thuộc tính: Thời gian tốt nghiệp(graduationDate),
 //Xếp loại tốt nghiệp (graduationRank) , Trường tốt nghiệp (Education)
 public class Fresher extends Employee {
     private String graduationDate;
-    private Enum.GraduationRank graduationRank;
+    private String graduationRank;
     private String graduateSchool;
 
     public Fresher() {
     }
 
-    public Fresher(String graduationDate, Enum.GraduationRank graduationRank, String graduateSchool) {
+    public Fresher(String graduationDate, String graduationRank, String graduateSchool) {
         this.graduationDate = graduationDate;
         this.graduationRank = graduationRank;
         this.graduateSchool = graduateSchool;
     }
 
-    public Fresher(int id, String name, String birthDay, String phone, String email, Enum.EmployeeType employeeType, String graduationDate, Enum.GraduationRank graduationRank, String graduateSchool) {
-        super(id, name, birthDay, phone, email, employeeType);
+    public Fresher(int id, String name, String birthDay, String phone, String email, String employeeType, List<Certificate> certificates, String graduationDate, String graduationRank, String graduateSchool) {
+        super(id, name, birthDay, phone, email, employeeType, certificates);
         this.graduationDate = graduationDate;
         this.graduationRank = graduationRank;
         this.graduateSchool = graduateSchool;
@@ -31,11 +33,11 @@ public class Fresher extends Employee {
         this.graduationDate = graduationDate;
     }
 
-    public Enum.GraduationRank getGraduationRank() {
+    public String getGraduationRank() {
         return graduationRank;
     }
 
-    public void setGraduationRank(Enum.GraduationRank graduationRank) {
+    public void setGraduationRank(String graduationRank) {
         this.graduationRank = graduationRank;
     }
 
@@ -48,8 +50,8 @@ public class Fresher extends Employee {
     }
 
     @Override
-    public void addCertificates(int certificatedId, String certificatedName, String certificateRank, String certificateDate) {
-        super.addCertificates(certificatedId, certificatedName, certificateRank, certificateDate);
+    public void addCertificate(Certificate certificate) {
+        super.addCertificate(certificate);
     }
 
     @Override
