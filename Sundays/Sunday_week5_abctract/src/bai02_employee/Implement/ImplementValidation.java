@@ -12,8 +12,8 @@ public class ImplementValidation implements IValidation {
     }
 
     @Override
-    public boolean isValidDateOfBirth(String dateOfBirth) {
-        return ValidationLogic.isValidDateOfBirth(dateOfBirth);
+    public boolean isValidDate(String date) {
+        return ValidationLogic.isValidDate(date);
     }
 
     @Override

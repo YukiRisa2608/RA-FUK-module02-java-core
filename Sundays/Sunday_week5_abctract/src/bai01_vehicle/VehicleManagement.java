@@ -61,7 +61,7 @@ public class VehicleManagement {
         } while (choice != 7);
         scanner.close();
     }
-
+//Display vehicle List
     private static void displayAllVehicle(List<Vehicle> vehicles) {
         System.out.println("___Vehicle list___");
             if (vehicles.isEmpty()) {
@@ -110,7 +110,7 @@ public class VehicleManagement {
         }
     }
 
-//Sort
+//Sort by price
     private static void sortVehicleByPrice() {
         vehicleList.sort(Comparator.comparingDouble(vehicle -> vehicle.price));
         System.out.println("Vehicle list after sorted:");
@@ -119,6 +119,7 @@ public class VehicleManagement {
             vehicle.displayDetails();
         }
     }
+
 //Remove vehicle
     private static void removeVehicleById() {
         System.out.println("Enter ID to remove");

@@ -1,4 +1,4 @@
-package bai02_employee.Main;
+package bai02_employee.Run;
 
 import bai02_employee.ClassModalEmployee.*;
 import bai02_employee.Implement.ValidationLogic;
@@ -17,9 +17,16 @@ import java.util.Scanner;
 //9. Viết chương trình tìm tất cả các nhân viên fresher.
 public class ManagerEmployee {
     static Scanner scanner = new Scanner(System.in);
-    static List<Experience> experiencList = new ArrayList<>();
-    static List<Intern> internList = new ArrayList<>();
-    static List<Fresher> fresherList = new ArrayList<>();
+    static List<Employee> experiencList = new ArrayList<>();
+    static List<Employee> internList = new ArrayList<>();
+    static List<Employee> fresherList = new ArrayList<>();
+    static List<Employee> allEmployeesList = new ArrayList<>();
+
+    public static void addAllEmployees() {
+        allEmployeesList.addAll(experiencList);
+        allEmployeesList.addAll(internList);
+        allEmployeesList.addAll(fresherList);
+    }
 
     public static void main(String[] args) {
         while (true) {
@@ -53,16 +60,16 @@ public class ManagerEmployee {
 //                deleteEmployee();
                 break;
             case 4:
-//                findAllInternEmployee();
+                findAllInternEmployee();
                 break;
             case 5:
-//                findAllExperienceEmployee();
+                findAllExperienceEmployee();
                 break;
             case 6:
-//                findAllFresherEmployee();
+                findAllFresherEmployee();
                 break;
             case 7:
-//                findAllEmployee();
+                displayAllEmployee();
                 break;
             case 8:
                 System.out.println("Exiting");
@@ -72,6 +79,42 @@ public class ManagerEmployee {
         }
     }
 
+    private static void deleteEmployee() {
+        System.out.println("Enter ID to delete");
+        int deleteId = scanner.nextInt();
+        scanner.nextLine();
+        //chua xong
+    }
+
+    //Display all employees
+    private static void displayAllEmployee() {
+        System.out.println("All employees:");
+        displayEmployees(allEmployeesList);
+    }
+    //Find all experience employees
+    private static void findAllExperienceEmployee() {
+        System.out.println("Experience Employees:");
+        displayEmployees(experiencList);
+    }
+    //Find all intern employees
+    private static void findAllInternEmployee() {
+        System.out.println("Intern Employees:");
+        displayEmployees(internList);
+    }
+    //Find all fresher employees
+    private static void findAllFresherEmployee() {
+        System.out.println("Intern Employees:");
+        displayEmployees(internList);
+    }
+    //Display employee
+    private static void displayEmployees(List<Employee> employees) {
+        for (Employee employee : employees) {
+            employee.showInfo();
+            System.out.println("________________");
+        }
+    }
+
+    //Add new employee
     private static void addNewEmployee() {
         System.out.println("___CHOOSE EMPLOYEE TYPE___");
         System.out.println("1. Experience");
@@ -196,8 +239,12 @@ public class ManagerEmployee {
             System.out.println("Enter certificate RANK");
             String certificateRank = scanner.nextLine();
 
-            System.out.println("Enter certificate DATE");
+            System.out.println("Enter certificate DATE: yyyy-mm-dd");
             String certificateDate = scanner.nextLine();
+            while (!ValidationLogic.isValidDate(certificateDate)) {
+                System.out.println("Invalid date, please try again");
+                certificateDate = scanner.nextLine();
+            }
 
             //Tạo đối tượng certificate và thêm vào danh sách bằng cấp
             Certificate newCertificate = new Certificate();
@@ -225,9 +272,9 @@ public class ManagerEmployee {
             name = scanner.nextLine();
         }
 
-        System.out.println("Enter birth day: dd/mm/yyyy");
+        System.out.println("Enter birth day: yyyy-mm-dd");
         String birthDay = scanner.nextLine();
-        while (!ValidationLogic.isValidDateOfBirth(birthDay)) {
+        while (!ValidationLogic.isValidDate(birthDay)) {
             System.out.println("Invalid Birth Day, input again");
             birthDay = scanner.nextLine();
         }

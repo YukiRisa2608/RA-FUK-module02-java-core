@@ -8,10 +8,10 @@ public class ValidationLogic {
         return Pattern.matches(namePattern, name);
     }
 
-    public static boolean isValidDateOfBirth(String dateOfBirth) {
+    public static boolean isValidDate(String date) {
         //YYYY-MM-DD
         String datePattern = "\\d{4}-\\d{2}-\\d{2}";
-        return Pattern.matches(datePattern, dateOfBirth);
+        return Pattern.matches(datePattern, date);
     }
 
     public static boolean isValidEmail(String email) {
