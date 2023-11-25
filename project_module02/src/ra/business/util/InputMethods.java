@@ -118,7 +118,7 @@ public class InputMethods {
     /**
      * getInput()  Return any String value from the user.
      */
-    private static String getInput() {
+    private static String  getInput() {
         Scanner input = new Scanner(System.in);
         return input.nextLine();
     }

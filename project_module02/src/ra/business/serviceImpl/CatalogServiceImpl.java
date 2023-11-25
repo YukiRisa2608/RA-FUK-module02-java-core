@@ -1,11 +1,10 @@
-package ra.business.serviceimpl;
+package ra.business.serviceImpl;
 
 import ra.business.dao.ICatalogDao;
-import ra.business.daoimpl.CatalogDaoImpl;
+import ra.business.daoImlp.CatalogDaoImpl;
 import ra.business.entity.Catalog;
 import ra.business.service.ICatalogService;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,26 +19,26 @@ public class CatalogServiceImpl implements ICatalogService {
 
     @Override
     public void createCatalog(Catalog catalog) {
-
+        catalogDao.add(catalog);
     }
 
     @Override
     public void updateCatalog(Catalog catalog) {
-
+        catalogDao.update(catalog);
     }
 
     @Override
     public void deleteByCatalogId(Long id) {
-
+        catalogDao.delete(id);
     }
 
     @Override
     public Catalog findById(Long id) {
-        return null;
+        return catalogDao.findById(id);
     }
 
     @Override
     public boolean checkExistByCatalogName(String catalogName) {
-        return false;
+        return catalogDao.checkExistsByName(catalogName);
     }
 }

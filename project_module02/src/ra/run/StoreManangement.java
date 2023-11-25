@@ -1,10 +1,9 @@
 package ra.run;
 import ra.business.entity.Catalog;
 import ra.business.service.ICatalogService;
-import ra.business.serviceimpl.CatalogServiceImpl;
+import ra.business.serviceImpl.CatalogServiceImpl;
 import ra.business.util.InputMethods;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class StoreManangement {
@@ -38,7 +37,7 @@ public class StoreManangement {
                     // điều hướng menu Quản lí sản phẩm
                     menuProduct();
                     break;
-                case 3:
+                case 0:
                     // thoát
                     System.out.println("Thoát chương trình");
                     System.exit(0);
@@ -53,8 +52,25 @@ public class StoreManangement {
 
     // xử li các chức năng của danh mục
     public static  void menuCatalog(){
+        System.out.println("=== MENU CATALOG ===");
+        System.out.println("1. Show Catalogs");
+        System.out.println("2. Add Catalog");
+
+        System.out.println("Hãy nhập vào lựa chọn");
+        byte choice = InputMethods.getByte();
+        switch (choice){
+            case 1:
+                displayCatalog();
+                break;
+            case 2:
+                addCatalog();
+                System.out.println("Added");
+                break;
+        }
+
 
     }
+
     // xử lí các chức năng của sản phẩm
     public static void menuProduct(){
         // lấy ra được đối tượng cần thay đổi trạng thái Catalog
@@ -65,8 +81,16 @@ public class StoreManangement {
     // chức năng hiển tị danh mục
     public static void displayCatalog(){
         List<Catalog> catalogs = catalogService.findAllOrderByCreatedDate();
+        System.out.printf("%-10s%-20s%-20s%-20s\n", "ID", "Catelog Name", "Description", "CreatedAt");
         catalogs.forEach(cat->{
-            System.out.printf("ID : %s - CreatedDate: - %s ",cat.getId(),cat.getCreatedDate());
+            if (cat.isStatus())
+                System.out.printf("%-10s%-20s%-20s%-20s\n",cat.getCatalogId()+"", cat.getCatalogName(), cat.getDescription(), cat.getCreatedDate()+"");
         });
+    }
+
+    private static void addCatalog() {
+        Catalog catalog = new Catalog();
+        catalog.input();
+        catalogService.createCatalog(catalog);
     }
 }

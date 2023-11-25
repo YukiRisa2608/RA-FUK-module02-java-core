@@ -8,4 +8,5 @@ public interface IGenericDao<T,E> { // T là entity , E là kiểu dữ liệu c
     void add (T t);
     void update(T t);
     void delete(E id);
+    boolean checkExistsByName(String name);
 }
