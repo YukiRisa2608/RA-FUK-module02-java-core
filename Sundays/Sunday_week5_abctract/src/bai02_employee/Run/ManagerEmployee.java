@@ -1,7 +1,9 @@
 package bai02_employee.Run;
 
 import bai02_employee.ClassModalEmployee.*;
+import bai02_employee.Implement.ImplementCrud;
 import bai02_employee.Implement.ValidationLogic;
+import bai02_employee.Interface.ICrud;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +19,13 @@ import java.util.Scanner;
 //9. Viết chương trình tìm tất cả các nhân viên fresher.
 public class ManagerEmployee {
     static Scanner scanner = new Scanner(System.in);
+    //Khai báo đối tượng triển khai CRUD
+    private static ICrud<Employee, Integer> employeeCrud = new ImplementCrud();
+    //Danh sách nhân viên theo từng loại
     static List<Employee> experiencList = new ArrayList<>();
     static List<Employee> internList = new ArrayList<>();
     static List<Employee> fresherList = new ArrayList<>();
+    //danh sách tất cả nhân vien
     static List<Employee> allEmployeesList = new ArrayList<>();
 
     public static void addAllEmployees() {
@@ -27,13 +33,13 @@ public class ManagerEmployee {
         allEmployeesList.addAll(internList);
         allEmployeesList.addAll(fresherList);
     }
-
+    //main
     public static void main(String[] args) {
         while (true) {
             menu();
         }
     }
-
+    //menu
     private static void menu() {
         System.out.println("___EMPLOYEE MANAGEMENT___");
         System.out.println("1. Add employee");
@@ -83,7 +89,8 @@ public class ManagerEmployee {
         System.out.println("Enter ID to delete");
         int deleteId = scanner.nextInt();
         scanner.nextLine();
-        //chua xong
+        employeeCrud.delete(deleteId);
+
     }
 
     //Display all employees

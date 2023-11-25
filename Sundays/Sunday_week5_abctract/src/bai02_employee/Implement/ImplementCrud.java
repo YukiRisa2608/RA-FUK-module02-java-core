@@ -25,18 +25,27 @@ public class ImplementCrud implements ICrud<Employee, Integer> {
     }
 
     @Override
-    public void update(Employee updateEmployee) {
+    public boolean update(Employee updateEmployee) {
         for (int i = 0; i < employees.size(); i++) {
             if (employees.get(i).getId() == updateEmployee.getId()) {
                 employees.set(i, updateEmployee);
-                break;
+                System.out.println("Updated employee successfully");
+                return true;
             }
         }
+        System.out.println("Not found employee");
+        return false;
     }
 
     @Override
-    public void delete(Integer id) {
-        employees.removeIf(employee -> employee.getId() == id);
+    public boolean delete(Integer id) {
+        boolean found = employees.removeIf(employee -> employee.getId() == id);
+        if (found) {
+            System.out.println("Deleting employee successfully");
+        } else {
+            System.out.println("Not found employee");
+        }
+        return found;
     }
 
     @Override
