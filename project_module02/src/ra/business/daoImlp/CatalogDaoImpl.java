@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CatalogDaoImpl implements ICatalogDao {
-    public static List<Catalog> catalogs = new ArrayList<>();
+    private static List<Catalog> catalogs = new ArrayList<>();
     //    khởi tạo dữ liệu mẫu với khối static
     static {
         catalogs.add(new Catalog("Đồ gia dụng", "Xịn", LocalDateTime.now(), true)); // thêm mới 1 phần tử vào danh sách catalogs
@@ -55,5 +55,20 @@ public class CatalogDaoImpl implements ICatalogDao {
             }
         }
         return false;
+    }
+
+    @Override
+    public List<Catalog> searchByName(String name) {
+        List<Catalog> catalogList = new ArrayList<>();
+        for (Catalog catalog: catalogs){
+            if (catalog.getCatalogName().toLowerCase().contains(name.toLowerCase())){
+                catalogList.add(catalog);
+            }
+        }
+        return catalogList;
+    }
+
+    public static List<Catalog> getCatalogs() {
+        return catalogs;
     }
 }

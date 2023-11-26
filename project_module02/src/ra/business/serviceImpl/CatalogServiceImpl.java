@@ -19,11 +19,19 @@ public class CatalogServiceImpl implements ICatalogService {
 
     @Override
     public void createCatalog(Catalog catalog) {
+        if (this.checkExistByCatalogName(catalog.getCatalogName())) {
+            System.out.println("Duplicate catalog name");
+            return;
+        }
         catalogDao.add(catalog);
     }
 
     @Override
     public void updateCatalog(Catalog catalog) {
+        if (this.checkExistByCatalogName(catalog.getCatalogName())) {
+            System.out.println("Duplicate catalog name");
+            return;
+        }
         catalogDao.update(catalog);
     }
 
@@ -40,5 +48,10 @@ public class CatalogServiceImpl implements ICatalogService {
     @Override
     public boolean checkExistByCatalogName(String catalogName) {
         return catalogDao.checkExistsByName(catalogName);
+    }
+
+    @Override
+    public List<Catalog> searchByName(String name) {
+        return catalogDao.searchByName(name);
     }
 }

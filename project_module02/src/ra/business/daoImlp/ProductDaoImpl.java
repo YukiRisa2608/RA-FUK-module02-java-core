@@ -80,4 +80,26 @@ public class ProductDaoImpl implements IProductDao {
         }
         return false;
     }
+
+    @Override
+    public List<Product> searchByName(String name) {
+        List<Product> productList = new ArrayList<>();
+        for (Product product: products){
+            if (product.getProductName().toLowerCase().contains(name.toLowerCase())){
+                productList.add(product);
+            }
+        }
+        return productList;
+    }
+
+    @Override
+    public List<Product> findProductByCategoryId(Long id) {
+        List<Product> productList = new ArrayList<>();
+        for (Product product: products){
+            if (product.getCategoryId().equals(id)){
+                productList.add(product);
+            }
+        }
+        return productList;
+    }
 }

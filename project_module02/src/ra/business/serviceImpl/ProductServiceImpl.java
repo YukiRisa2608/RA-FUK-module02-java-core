@@ -30,6 +30,10 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public void updateProduct(Product product) {
+        if (this.checkExistByProductName(product.getProductName())) {
+            System.out.println("Teen san pham da ton tai");
+            return;
+        }
         productDao.update(product);
     }
 
@@ -46,5 +50,15 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public boolean checkExistByProductName(String productName) {
         return productDao.checkExistsByName(productName);
+    }
+
+    @Override
+    public List<Product> searchByName(String name) {
+        return productDao.searchByName(name);
+    }
+
+    @Override
+    public List<Product> findProductByCategoryId(Long id) {
+        return productDao.findProductByCategoryId(id);
     }
 }

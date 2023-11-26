@@ -1,13 +1,19 @@
 package ra.run;
+
 import ra.business.entity.Catalog;
+import ra.business.entity.Product;
 import ra.business.service.ICatalogService;
+import ra.business.service.IProductService;
 import ra.business.serviceImpl.CatalogServiceImpl;
+import ra.business.serviceImpl.ProductServiceImpl;
 import ra.business.util.InputMethods;
 
 import java.util.List;
 
 public class StoreManangement {
     private static ICatalogService catalogService = new CatalogServiceImpl();
+    private static IProductService productService = new ProductServiceImpl();
+
     public static void main(String[] args) {
         // chạy chương trình
 
@@ -28,7 +34,7 @@ public class StoreManangement {
             // yêu cầu nhập lựa chọn
             System.out.println("Hãy nhập vào lựa chọn");
             byte choice = InputMethods.getByte();
-            switch (choice){
+            switch (choice) {
                 case 1:
                     // điều hướng menu Quản lí dnah mục
                     menuCatalog();
@@ -46,45 +52,110 @@ public class StoreManangement {
                     System.err.println("Lựa chọn không hợp lệ !");
                     break;
             }
-        }while (true);
+        } while (true);
 
     }
 
     // xử li các chức năng của danh mục
-    public static  void menuCatalog(){
-        System.out.println("=== MENU CATALOG ===");
-        System.out.println("1. Show Catalogs");
-        System.out.println("2. Add Catalog");
+    public static void menuCatalog() {
+        byte choice;
+        do {
+            System.out.println("=== MENU CATALOG ===");
+            System.out.println("1. Show Catalogs");
+            System.out.println("2. Add Catalog");
+            System.out.println("3. Update Catalog");
+            System.out.println("4. Delete Catalog");
+            System.out.println("5. Search by catelog name");
+            System.out.println("6. Show/Hide catalog");
+            System.out.println("0. Exit");
 
-        System.out.println("Hãy nhập vào lựa chọn");
-        byte choice = InputMethods.getByte();
-        switch (choice){
-            case 1:
-                displayCatalog();
-                break;
-            case 2:
-                addCatalog();
-                System.out.println("Added");
-                break;
-        }
-
-
+            System.out.println("Hãy nhập vào lựa chọn");
+            choice = InputMethods.getByte();
+            switch (choice) {
+                case 1:
+                    List<Catalog> catalogs = catalogService.findAllOrderByCreatedDate();
+                    displayCatalog(catalogs);
+                    break;
+                case 2:
+                    addCatalog();
+                    break;
+                case 3:
+                    updateCatalog();
+                    break;
+                case 4:
+                    deleteCatalog();
+                    break;
+                case 5:
+                    searchCatalogsByName();
+                case 6:
+                    showOrHideCatalogById();
+                case 0:
+                    break;
+                default:
+                    System.out.println("invalid choice!!");
+                    break;
+            }
+        } while (choice != 0);
     }
 
     // xử lí các chức năng của sản phẩm
-    public static void menuProduct(){
-        // lấy ra được đối tượng cần thay đổi trạng thái Catalog
-        // dùng setter để thay đổi trạng thái từ true về false
-        // lưu đối tượng vừa sửa vào danh sách
+    public static void menuProduct() {
+        byte choice;
+        do {
+            System.out.println("=== MENU PRODUCTS ===");
+            System.out.println("1. Show products");
+            System.out.println("2. Show products by category");
+            System.out.println("3. Add Product");
+            System.out.println("4. Update Product");
+            System.out.println("5. Delete Product");
+            System.out.println("0. Exit");
+            System.out.println("Hãy nhập vào lựa chọn");
+            choice = InputMethods.getByte();
 
+            switch (choice) {
+                case 1:
+                    List<Product> products = productService.findAllOrderByCreatedDate();
+                    displayProduct(products);
+                    break;
+                case 2:
+                    showProductByCategory();
+                    break;
+
+                case 0:
+                    break;
+                default:
+                    System.out.println("invalid choice");
+                    break;
+            }
+        } while (choice != 0);
     }
-    // chức năng hiển tị danh mục
-    public static void displayCatalog(){
+
+    //chuwsc nawng cua product
+    private static void showProductByCategory() {
+        System.out.println("=== CATEGORIES ===");
         List<Catalog> catalogs = catalogService.findAllOrderByCreatedDate();
+        displayCatalog(catalogs);
+
+        System.out.println("Enter Category ID: ");
+        long category_id = InputMethods.getLong();
+        List<Product> products = productService.findProductByCategoryId(category_id);
+        displayProduct(products);
+    }
+
+    // chức năng hiển tị danh mục
+    public static void displayCatalog(List<Catalog> catalogs) {
         System.out.printf("%-10s%-20s%-20s%-20s\n", "ID", "Catelog Name", "Description", "CreatedAt");
-        catalogs.forEach(cat->{
+        catalogs.forEach(cat -> {
             if (cat.isStatus())
-                System.out.printf("%-10s%-20s%-20s%-20s\n",cat.getCatalogId()+"", cat.getCatalogName(), cat.getDescription(), cat.getCreatedDate()+"");
+                System.out.printf("%-10s%-20s%-20s%-20s\n", cat.getCatalogId() + "", cat.getCatalogName(), cat.getDescription(), cat.getCreatedDate() + "");
+        });
+    }
+
+    public static void displayProduct(List<Product> products) {
+        System.out.printf("%-10s%-20s%-15s%-20s%-20s%-10s%-25s%-25s\n", "ID", "Product Name", "Category ID", "Description", "Unit Price", "Stock",  "CreatedAt", "UpdatedAt");
+        products.forEach(pro -> {
+            if (pro.isStatus())
+                System.out.printf("%-10s%-20s%-15s%-20s%-20s%-10s%-25s%-25s\n",pro.getProductId() + "", pro.getProductName(), pro.getCategoryId(), pro.getDescription(), pro.getUnitPrice()+"", pro.getStock()+"", pro.getCreatedAt() + "", pro.getUpdatedAt());
         });
     }
 
@@ -92,5 +163,59 @@ public class StoreManangement {
         Catalog catalog = new Catalog();
         catalog.input();
         catalogService.createCatalog(catalog);
+    }
+
+    private static void updateCatalog() {
+        System.out.println("Enter id catalog update: ");
+        long idUpdate = InputMethods.getLong();
+        Catalog catalogUpdate = catalogService.findById(idUpdate);
+        if (catalogUpdate == null) {
+            System.out.println("Not found catalog");
+        } else {
+            String name;
+            do {
+                System.out.println("Enter catalog name update: ");
+                name = InputMethods.getString();
+                boolean isDuplicateName = catalogService.checkExistByCatalogName(name);
+                if (isDuplicateName) {
+                    System.out.println("Duplicate name");
+                } else {
+                    break;
+                }
+            } while (true);
+            catalogUpdate.setCatalogName(name);
+            System.out.println("Enter catalog des update: ");
+            catalogUpdate.setDescription(InputMethods.getString());
+            //catalogService.updateCatalog(catalogUpdate);
+        }
+    }
+
+    private static void deleteCatalog() {
+        System.out.println("Enter id catalog delete: ");
+        long idUpdate = InputMethods.getLong();
+        Catalog catalogUpdate = catalogService.findById(idUpdate);
+        if (catalogUpdate == null) {
+            System.out.println("Not found catalog");
+        } else {
+            catalogService.deleteByCatalogId(idUpdate);
+        }
+    }
+
+    private static void searchCatalogsByName() {
+        System.out.println("Enter name: ");
+        String name = InputMethods.getString();
+        displayCatalog(catalogService.searchByName(name));
+    }
+
+    private static void showOrHideCatalogById() {
+        System.out.println("Enter id catalog update: ");
+        long idUpdate = InputMethods.getLong();
+        Catalog catalogUpdate = catalogService.findById(idUpdate);
+        if (catalogUpdate == null) {
+            System.out.println("Not found catalog");
+        } else {
+            System.out.println("Show (type true) or Hide(type false) Catalog: ");
+            catalogUpdate.setStatus(InputMethods.getBoolean());
+        }
     }
 }

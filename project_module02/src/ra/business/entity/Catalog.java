@@ -16,7 +16,8 @@ public class Catalog {
 
     private boolean status;
 
-    private static Long ID = CatalogDaoImpl.catalogs.size() == 0 ? 1 : CatalogDaoImpl.catalogs.get(CatalogDaoImpl.catalogs.size() - 1).getCatalogId() + 1;
+
+    private static Long ID = CatalogDaoImpl.getCatalogs().size() == 0 ? 1 : CatalogDaoImpl.getCatalogs().get(CatalogDaoImpl.getCatalogs().size() - 1).getCatalogId() + 1;
 
     public void input(){
         System.out.println("Enter name: ");

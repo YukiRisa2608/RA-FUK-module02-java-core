@@ -11,4 +11,5 @@ public interface ICatalogService {
     void deleteByCatalogId(Long id);
     Catalog findById(Long id);
     boolean checkExistByCatalogName(String catalogName);
+    List<Catalog> searchByName(String name);
 }
