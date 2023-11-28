@@ -3,6 +3,7 @@ package ra.business.daoImlp;
 import ra.business.dao.IProductDao;
 import ra.business.entity.Catalog;
 import ra.business.entity.Product;
+import ra.business.util.IOFile;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,12 +14,13 @@ public class ProductDaoImpl implements IProductDao {
 
     //    khởi tạo dữ liệu mẫu với khối static
     static {
-        products.add(new Product(1L, "Noi com dien", 1L, "Sản phẩm ok", 100, 120, LocalDateTime.now(), LocalDateTime.now(), true)); // thêm mới 1 phần tử vào danh sách
-        products.add(new Product(2L, "banh", 2L, "Sản phẩm ok", 100, 120, LocalDateTime.now(), LocalDateTime.now(), true)); // thêm mới 1 phần tử vào danh sách
-        products.add(new Product(3L, "thijt bo", 2L, "Sản phẩm ok", 100, 120, LocalDateTime.now(), LocalDateTime.now(), true)); // thêm mới 1 phần tử vào danh sách
-        products.add(new Product(4L, "Tom hum", 2L, "Sản phẩm ok", 100, 120, LocalDateTime.now(), LocalDateTime.now(), true)); // thêm mới 1 phần tử vào danh sách
-        products.add(new Product(5L, "Noi ap suat", 1L, "Sản phẩm ok", 100, 120, LocalDateTime.now(), LocalDateTime.now(), true)); // thêm mới 1 phần tử vào danh sách
-        products.add(new Product(6L, "Dao thai", 1L, "Sản phẩm ok", 100, 120, LocalDateTime.now(), LocalDateTime.now(), true)); // thêm mới 1 phần tử vào danh sách
+//        products.add(new Product("Noi com dien", 1L, "Sản phẩm ok", 100, 120, LocalDateTime.now(), LocalDateTime.now(), true)); // thêm mới 1 phần tử vào danh sách
+//        products.add(new Product("banh", 2L, "Sản phẩm ok", 100, 120, LocalDateTime.now(), LocalDateTime.now(), true)); // thêm mới 1 phần tử vào danh sách
+//        products.add(new Product("thijt bo", 2L, "Sản phẩm ok", 100, 120, LocalDateTime.now(), LocalDateTime.now(), true)); // thêm mới 1 phần tử vào danh sách
+//        products.add(new Product("Tom hum", 2L, "Sản phẩm ok", 100, 120, LocalDateTime.now(), LocalDateTime.now(), true)); // thêm mới 1 phần tử vào danh sách
+//        products.add(new Product("Noi ap suat", 1L, "Sản phẩm ok", 100, 120, LocalDateTime.now(), LocalDateTime.now(), true)); // thêm mới 1 phần tử vào danh sách
+//        products.add(new Product("Dao thai", 1L, "Sản phẩm ok", 100, 120, LocalDateTime.now(), LocalDateTime.now(), true)); // thêm mới 1 phần tử vào danh sách
+        products = IOFile.getListFromFile(IOFile.PRODUCT_PATH);
     }
 
     @Override
@@ -39,6 +41,7 @@ public class ProductDaoImpl implements IProductDao {
     @Override
     public void add(Product product) {
         products.add(product);
+        IOFile.writeToFile(IOFile.PRODUCT_PATH, products);
     }
 
     @Override
@@ -101,5 +104,9 @@ public class ProductDaoImpl implements IProductDao {
             }
         }
         return productList;
+    }
+
+    public static List<Product> getProducts() {
+        return products;
     }
 }

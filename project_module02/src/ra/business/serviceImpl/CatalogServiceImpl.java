@@ -28,10 +28,10 @@ public class CatalogServiceImpl implements ICatalogService {
 
     @Override
     public void updateCatalog(Catalog catalog) {
-        if (this.checkExistByCatalogName(catalog.getCatalogName())) {
-            System.out.println("Duplicate catalog name");
-            return;
-        }
+//        if (this.checkExistByCatalogName(catalog.getCatalogName())) {
+//            System.out.println("Duplicate catalog name");
+//            return;
+//        }
         catalogDao.update(catalog);
     }
 

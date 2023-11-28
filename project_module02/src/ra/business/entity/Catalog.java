@@ -3,9 +3,10 @@ package ra.business.entity;
 import ra.business.daoImlp.CatalogDaoImpl;
 import ra.business.util.InputMethods;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Catalog {
+public class Catalog implements Serializable {
     private Long catalogId;
 
     private String catalogName;
@@ -79,4 +80,16 @@ public class Catalog {
     public void setStatus(boolean status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "Catalog{" +
+                "catalogId=" + catalogId +
+                ", catalogName='" + catalogName + '\'' +
+                ", description='" + description + '\'' +
+                ", createdDate=" + createdDate +
+                ", status=" + status +
+                '}';
+    }
+
 }

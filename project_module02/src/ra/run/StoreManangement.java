@@ -6,6 +6,7 @@ import ra.business.service.ICatalogService;
 import ra.business.service.IProductService;
 import ra.business.serviceImpl.CatalogServiceImpl;
 import ra.business.serviceImpl.ProductServiceImpl;
+import ra.business.util.Formatter;
 import ra.business.util.InputMethods;
 
 import java.util.List;
@@ -120,6 +121,8 @@ public class StoreManangement {
                 case 2:
                     showProductByCategory();
                     break;
+                case 3:
+                    addProduct();
 
                 case 0:
                     break;
@@ -129,6 +132,7 @@ public class StoreManangement {
             }
         } while (choice != 0);
     }
+
 
     //chuwsc nawng cua product
     private static void showProductByCategory() {
@@ -142,20 +146,46 @@ public class StoreManangement {
         displayProduct(products);
     }
 
+    public static void displayProduct(List<Product> products) {
+        System.out.printf("%-10s%-20s%-15s%-20s%-20s%-10s%-25s%-25s%-20s\n", "ID", "Product Name", "Category ID", "Description", "Unit Price", "Stock", "CreatedAt", "UpdatedAt", "Status");
+        products.forEach(pro -> {
+            if (pro.isStatus())
+                System.out.printf("%-10s%-20s%-15s%-20s%-20s%-10s%-25s%-25s%-20s\n", pro.getProductId() + "", pro.getProductName(), pro.getCategoryId(), pro.getDescription(), Formatter.getNumberFormatterVND(pro.getUnitPrice()), pro.getStock() + "", pro.getCreatedAt() + "", pro.getUpdatedAt(), pro.isStatus() ? "Đang bán" : "Ngừng bán");
+        });
+    }
+
+    private static void addProduct() {
+        Long catalog_id;
+        Catalog catalogChoice;
+        do {
+            System.out.println("=== CHỌN CATEGORY ===");
+            displayCatalog(catalogService.findAllOrderByCreatedDate());
+            System.out.println("Nhap id catalog: ");
+            catalog_id = InputMethods.getLong();
+            catalogChoice = catalogService.findById(catalog_id);
+            if (catalogChoice == null) {
+                System.out.println("Catalog không hợp lệ, hãy nhập lại!");
+            }
+        } while (catalogChoice == null);
+
+        byte n;
+        System.out.println("Nhap so luong san pham: ");
+        n = InputMethods.getByte();
+        for (int i = 0; i < n; i++) {
+            System.out.println("=== THEM SAN PHAM THU " + (i+1) + " ===");
+            Product product = new Product();
+            product.input(catalogChoice.getCatalogId());
+            productService.createProduct(product);
+        }
+    }
+
+
     // chức năng hiển tị danh mục
     public static void displayCatalog(List<Catalog> catalogs) {
         System.out.printf("%-10s%-20s%-20s%-20s\n", "ID", "Catelog Name", "Description", "CreatedAt");
         catalogs.forEach(cat -> {
             if (cat.isStatus())
                 System.out.printf("%-10s%-20s%-20s%-20s\n", cat.getCatalogId() + "", cat.getCatalogName(), cat.getDescription(), cat.getCreatedDate() + "");
-        });
-    }
-
-    public static void displayProduct(List<Product> products) {
-        System.out.printf("%-10s%-20s%-15s%-20s%-20s%-10s%-25s%-25s\n", "ID", "Product Name", "Category ID", "Description", "Unit Price", "Stock",  "CreatedAt", "UpdatedAt");
-        products.forEach(pro -> {
-            if (pro.isStatus())
-                System.out.printf("%-10s%-20s%-15s%-20s%-20s%-10s%-25s%-25s\n",pro.getProductId() + "", pro.getProductName(), pro.getCategoryId(), pro.getDescription(), pro.getUnitPrice()+"", pro.getStock()+"", pro.getCreatedAt() + "", pro.getUpdatedAt());
         });
     }
 
@@ -186,7 +216,7 @@ public class StoreManangement {
             catalogUpdate.setCatalogName(name);
             System.out.println("Enter catalog des update: ");
             catalogUpdate.setDescription(InputMethods.getString());
-            //catalogService.updateCatalog(catalogUpdate);
+            catalogService.updateCatalog(catalogUpdate);
         }
     }
 
@@ -216,6 +246,7 @@ public class StoreManangement {
         } else {
             System.out.println("Show (type true) or Hide(type false) Catalog: ");
             catalogUpdate.setStatus(InputMethods.getBoolean());
+            catalogService.updateCatalog(catalogUpdate);
         }
     }
 }
