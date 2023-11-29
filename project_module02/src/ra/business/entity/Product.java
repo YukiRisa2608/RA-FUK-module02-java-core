@@ -21,12 +21,12 @@ public class Product implements Serializable {
     private static Long ID = ProductDaoImpl.getProducts().size() == 0 ? 1 : ProductDaoImpl.getProducts().get(ProductDaoImpl.getProducts().size() - 1).getProductId() + 1;
 
     public void input(Long categoryId){
-        System.out.println("Enter name: ");
+        System.out.println("Enter name of product: ");
         this.productName = InputMethods.getString();
 
         this.categoryId = categoryId;
 
-        System.out.println("Enter description: ");
+        System.out.println("Enter description for product: ");
         this.description = InputMethods.getString();
 
         System.out.println("Enter init price: ");
@@ -35,7 +35,7 @@ public class Product implements Serializable {
         System.out.println("Enter stock: ");
         this.stock = InputMethods.getInteger();
 
-        System.out.println("Enter status (true/false): ");
+        System.out.println("Enter status: Available (type true) or Not Available(type false) ");
         this.status = InputMethods.getBoolean();
     }
 
