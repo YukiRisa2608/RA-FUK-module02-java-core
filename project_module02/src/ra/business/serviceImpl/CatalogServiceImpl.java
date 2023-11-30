@@ -24,6 +24,7 @@ public class CatalogServiceImpl implements ICatalogService {
             return;
         }
         catalogDao.add(catalog);
+        System.out.println("--- Successfully added category---");
     }
 
     @Override
@@ -53,5 +54,16 @@ public class CatalogServiceImpl implements ICatalogService {
     @Override
     public List<Catalog> searchByName(String name) {
         return catalogDao.searchByName(name);
+    }
+
+    @Override
+    public Long getNewId() {
+        Long idMax = 0L;
+        for (Catalog p: catalogDao.findAll()) {
+            if(idMax<p.getCatalogId()){
+                idMax = p.getCatalogId();
+            }
+        }
+        return idMax+1;
     }
 }

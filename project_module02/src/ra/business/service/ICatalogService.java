@@ -12,4 +12,5 @@ public interface ICatalogService {
     Catalog findById(Long id);
     boolean checkExistByCatalogName(String catalogName);
     List<Catalog> searchByName(String name);
+    Long getNewId();
 }

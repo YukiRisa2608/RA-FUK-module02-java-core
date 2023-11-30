@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface IProductDao extends IGenericDao<Product,Long> {
     List<Product> findProductByCategoryId(Long id);
+    List<Product> filtByStatus(boolean status);
 }

@@ -4,6 +4,7 @@ import ra.business.dao.ICatalogDao;
 import ra.business.dao.IProductDao;
 import ra.business.daoImlp.CatalogDaoImpl;
 import ra.business.daoImlp.ProductDaoImpl;
+import ra.business.entity.Catalog;
 import ra.business.entity.Product;
 import ra.business.service.IProductService;
 
@@ -26,14 +27,15 @@ public class ProductServiceImpl implements IProductService {
             return;
         }
         productDao.add(product);
+        System.out.println("--- Successfully added product number ---");
     }
 
     @Override
     public void updateProduct(Product product) {
-        if (this.checkExistByProductName(product.getProductName())) {
-            System.out.println("Teen san pham da ton tai");
-            return;
-        }
+//        if (this.checkExistByProductName(product.getProductName())) {
+//            System.out.println("Teen san pham da ton tai");
+//            return;
+//        }
         productDao.update(product);
     }
 
@@ -60,5 +62,21 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public List<Product> findProductByCategoryId(Long id) {
         return productDao.findProductByCategoryId(id);
+    }
+
+    @Override
+    public Long getNewId() {
+        Long idMax = 0L;
+        for (Product p: productDao.findAll()) {
+            if(idMax<p.getProductId()){
+                idMax = p.getProductId();
+            }
+        }
+        return idMax+1;
+    }
+
+    @Override
+    public List<Product> filtByStatus(boolean status) {
+        return productDao.filtByStatus(status);
     }
 }

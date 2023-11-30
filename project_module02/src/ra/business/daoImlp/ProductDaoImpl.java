@@ -46,22 +46,19 @@ public class ProductDaoImpl implements IProductDao {
 
     @Override
     public void update(Product product) {
-        int index = this.findIndexProduct(product.getProductId());
-        if (index == -1){
-            System.out.println("Khong tim thay product co id: " + product.getProductId());
-            return;
-        }
-        products.set(index, product);
+//        int index = this.findIndexProduct(product.getProductId());
+//        if (index == -1){
+//            System.out.println("Khong tim thay product co id: " + product.getProductId());
+//            return;
+//        }
+//        products.set(index, product);
+        IOFile.writeToFile(IOFile.PRODUCT_PATH, products);
     }
 
     @Override
     public void delete(Long id) {
-        int index = this.findIndexProduct(id);
-        if (index == -1){
-            System.out.println("Khong tim thay product co id: " + id);
-            return;
-        }
-        products.remove(index);
+        products.remove(findById(id));
+        IOFile.writeToFile(IOFile.PRODUCT_PATH, products);
     }
 
     public int findIndexProduct(Long id) {
@@ -108,5 +105,16 @@ public class ProductDaoImpl implements IProductDao {
 
     public static List<Product> getProducts() {
         return products;
+    }
+
+    @Override
+    public List<Product> filtByStatus(boolean status) {
+        List<Product> productList = new ArrayList<>();
+        for (Product product: products){
+            if (product.isStatus() == status){
+                productList.add(product);
+            }
+        }
+        return productList;
     }
 }

@@ -3,6 +3,7 @@ package ra.business.entity;
 import ra.business.daoImlp.CatalogDaoImpl;
 import ra.business.daoImlp.ProductDaoImpl;
 import ra.business.util.InputMethods;
+import ra.business.util.Validate;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -18,11 +19,11 @@ public class Product implements Serializable {
     private LocalDateTime updatedAt;
     private boolean status;
 
-    private static Long ID = ProductDaoImpl.getProducts().size() == 0 ? 1 : ProductDaoImpl.getProducts().get(ProductDaoImpl.getProducts().size() - 1).getProductId() + 1;
+//    private static Long ID = ProductDaoImpl.getProducts().size() == 0 ? 1 : ProductDaoImpl.getProducts().get(ProductDaoImpl.getProducts().size() - 1).getProductId() + 1;
 
     public void input(Long categoryId){
         System.out.println("Enter name of product: ");
-        this.productName = InputMethods.getString();
+        this.productName = Validate.maxString(Validate.minString(InputMethods.getString(), 3), 20);
 
         this.categoryId = categoryId;
 
@@ -30,17 +31,17 @@ public class Product implements Serializable {
         this.description = InputMethods.getString();
 
         System.out.println("Enter init price: ");
-        this.unitPrice = InputMethods.getDouble();
+        this.unitPrice = Validate.minNumber(InputMethods.getDouble(), 1);
 
         System.out.println("Enter stock: ");
-        this.stock = InputMethods.getInteger();
+        this.stock = (int) Validate.minNumber(InputMethods.getInteger(), 0);
 
         System.out.println("Enter status: Available (type true) or Not Available(type false) ");
         this.status = InputMethods.getBoolean();
     }
 
-    public Product(String productName, Long categoryId, String description, double unitPrice, int stock, LocalDateTime createdAt, LocalDateTime updatedAt, boolean status) {
-        this.productId = ID++;
+    public Product(Long id, String productName, Long categoryId, String description, double unitPrice, int stock, LocalDateTime createdAt, LocalDateTime updatedAt, boolean status) {
+        this.productId = id;
         this.productName = productName;
         this.categoryId = categoryId;
         this.description = description;
@@ -52,7 +53,6 @@ public class Product implements Serializable {
     }
 
     public Product() {
-        this.productId = ID++;
         this.createdAt = LocalDateTime.now();
     }
 

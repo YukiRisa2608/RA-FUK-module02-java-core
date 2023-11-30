@@ -15,4 +15,7 @@ public interface IProductService {
     Product findById(Long id);
     boolean checkExistByProductName(String productName);
     List<Product> searchByName(String name);
+    List<Product> filtByStatus(boolean status);
+    Long getNewId();
+
 }

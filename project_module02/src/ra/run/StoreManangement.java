@@ -9,6 +9,7 @@ import ra.business.serviceImpl.ProductServiceImpl;
 import ra.business.util.Formatter;
 import ra.business.util.InputMethods;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class StoreManangement {
@@ -19,6 +20,11 @@ public class StoreManangement {
         // chạy chương trình
 
         // hiển thị menu chức năng
+        home();
+
+    }
+
+    private static void home() {
         do {
             System.out.println("=== MENU ===");
             System.out.println("1. Category Management");
@@ -47,7 +53,6 @@ public class StoreManangement {
                     break;
             }
         } while (true);
-
     }
 
     // xử li các chức năng của danh mục
@@ -61,6 +66,7 @@ public class StoreManangement {
             System.out.println("4. Delete Catalog by ID");
             System.out.println("5. Search by catelog name");
             System.out.println("6. Show/Hide catalog");
+            System.out.println("7. Home");
             System.out.println("0. Exit");
 
             System.out.println("Enter your choice:");
@@ -85,6 +91,9 @@ public class StoreManangement {
                 case 6:
                     showOrHideCatalogById();
                     break;
+                case 7:
+                    home();
+                    break;
                 case 0:
                     System.out.println("Exiting...");
                     System.exit(0);
@@ -106,6 +115,10 @@ public class StoreManangement {
             System.out.println("3. Add Product");
             System.out.println("4. Update Product");
             System.out.println("5. Delete Product");
+            System.out.println("6. Update Status");
+            System.out.println("7. Search By Product Name");
+            System.out.println("8. Filt by status");
+            System.out.println("9. Home");
             System.out.println("0. Exit");
             System.out.println("Enter your choice:");
 
@@ -122,6 +135,24 @@ public class StoreManangement {
                 case 3:
                     addProduct();
                     break;
+                case 4:
+                    updateProduct();
+                    break;
+                case 5:
+                    deleteProduct();
+                    break;
+                case 6:
+                    updateStatus();
+                    break;
+                case 7:
+                    searchByProductName();
+                    break;
+                case 8:
+                    filtByStatus();
+                    break;
+                case 9:
+                    home();
+                    break;
                 case 0:
                     System.out.println("Exiting...");
                     System.exit(0);
@@ -132,6 +163,8 @@ public class StoreManangement {
             }
         } while (choice != 0);
     }
+
+
 ///////////////////////////////////////////////////////////////////////////////////////
     //Chức năng của product
 
@@ -149,10 +182,13 @@ public class StoreManangement {
 
     //Show all products
     public static void displayProduct(List<Product> products) {
+        if (products == null || products.size() == 0){
+            System.out.println("not found any product");
+            return;
+        }
         System.out.printf("%-10s%-20s%-15s%-20s%-20s%-10s%-25s%-25s%-20s\n", "ID", "PRODUCT NAME", "CATEGORY ID", "DESCRIPTION", "UNIT PRICE", "STOCK", "CREAT AT", "UPDATE AT", "STATUS");
         products.forEach(pro -> {
-            if (pro.isStatus())
-                System.out.printf("%-10s%-20s%-15s%-20s%-20s%-10s%-25s%-25s%-20s\n", pro.getProductId() + "", pro.getProductName(), pro.getCategoryId(), pro.getDescription(), Formatter.getNumberFormatterVND(pro.getUnitPrice()), pro.getStock() + "", pro.getCreatedAt() + "", pro.getUpdatedAt(), pro.isStatus() ? "Available" : "Not Available");
+            System.out.printf("%-10s%-20s%-15s%-20s%-20s%-10s%-25s%-25s%-20s\n", pro.getProductId() + "", pro.getProductName(), pro.getCategoryId(), pro.getDescription(), Formatter.getNumberFormatterVND(pro.getUnitPrice()), pro.getStock() + "", pro.getCreatedAt() + "", pro.getUpdatedAt(), pro.isStatus() ? "Available" : "Not Available");
         });
     }
 
@@ -178,17 +214,130 @@ public class StoreManangement {
             System.out.println("=== Enter information for product number " + (i + 1) + " ===");
             Product product = new Product();
             product.input(catalogChoice.getCatalogId());
+            product.setProductId(productService.getNewId());
             productService.createProduct(product);
-            System.out.println("--- Successfully added product number " + (i + 1) + "---");
+
         }
     }
 
 
- ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    private static void updateProduct() {
+        System.out.println("Enter ID of product to update: ");
+        long idUpdate = InputMethods.getLong();
+        Product productUpdate = productService.findById(idUpdate);
+        if (productUpdate == null) {
+            System.out.println("Not found product, try again.");
+        } else {
+            //update name
+            String name;
+            do {
+                System.out.println("Enter product name to update: ");
+                name = InputMethods.getString();
+                boolean isDuplicateName = productService.checkExistByProductName(name);
+                if (isDuplicateName) {
+                    System.out.println("Duplicate name, try with an other name");
+                } else {
+                    break;
+                }
+            } while (true);
+            productUpdate.setProductName(name);
+
+            //update category id
+            Long catalog_id;
+            Catalog catalogChoice;
+            do {
+                System.out.println("=== SELECT CATEGORY TO ADD===");
+                displayCatalog(catalogService.findAllOrderByCreatedDate());
+                System.out.println("Enter category ID you want to add: ");
+                catalog_id = InputMethods.getLong();
+                catalogChoice = catalogService.findById(catalog_id);
+                if (catalogChoice == null) {
+                    System.out.println("Catalog không hợp lệ, hãy nhập lại!");
+                }
+            } while (catalogChoice == null);
+
+            productUpdate.setCategoryId(catalog_id);
+
+            //update description
+            System.out.println("Enter description of product to update: ");
+            productUpdate.setDescription(InputMethods.getString());
+
+            //update unit price
+            System.out.println("Enter unit price: ");
+            productUpdate.setUnitPrice(InputMethods.getDouble());
+
+            //update stock
+            System.out.println("Enter stock: ");
+            productUpdate.setStock(InputMethods.getInteger());
+
+            //update updated_at
+            productUpdate.setUpdatedAt(LocalDateTime.now());
+
+            productService.updateProduct(productUpdate);
+            System.out.println("--- Successfully update category---");
+        }
+    }
+
+    private static void deleteProduct() {
+        System.out.println("Enter ID of product to delete: ");
+        long idDelete = InputMethods.getLong();
+        Product productDelete = productService.findById(idDelete);
+        if (productDelete == null) {
+            System.out.println("Not found product with ID: " + idDelete);
+        } else {
+            productService.deleteByProductId(idDelete);
+            System.out.println("--- Successfully deleted category---");
+        }
+    }
+
+    private static void updateStatus() {
+        System.out.println("Enter ID of product: ");
+        long idUpdate = InputMethods.getLong();
+        Product productUpdate = productService.findById(idUpdate);
+        if (productUpdate == null) {
+            System.out.println("Not found product with id " + idUpdate);
+        } else {
+            System.out.println("Available (type true) or Unavailable(type false) Product: ");
+            productUpdate.setStatus(InputMethods.getBoolean());
+            productService.updateProduct(productUpdate);
+            System.out.println("Successfully!!!");
+        }
+    }
+
+    private static void searchByProductName() {
+        System.out.println("Enter name of product you want to search: ");
+        String name = InputMethods.getString();
+        System.out.println("===FOUND LIST===");
+        displayProduct(productService.searchByName(name));
+    }
+
+
+    private static void filtByStatus() {
+        byte statusChoice;
+        do{
+            System.out.println(" === STATUS ===");
+            System.out.println("1. Available");
+            System.out.println("2. Unavailable");
+            System.out.println("Choice: ");
+            statusChoice = InputMethods.getByte();
+        } while(statusChoice != 1 && statusChoice != 2);
+
+        if (statusChoice == 1){
+            displayProduct(productService.filtByStatus(true));
+        }else {
+            displayProduct(productService.filtByStatus(false));
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //Chức năng cho Category
 
     // Show all category
     public static void displayCatalog(List<Catalog> catalogs) {
+        if (catalogs == null || catalogs.size() == 0){ //catalogs.isEmpty()
+            System.out.println("not found any catalogs");
+            return;
+        }
         System.out.printf("%-10s%-20s%-20s%-20s\n", "ID", "CATEGORY NAME", "DESCRIPTION", "CREAT AT");
         catalogs.forEach(cat -> {
             if (cat.isStatus())
@@ -200,8 +349,8 @@ public class StoreManangement {
     private static void addCatalog() {
         Catalog catalog = new Catalog();
         catalog.input();
+        catalog.setCatalogId(catalogService.getNewId());
         catalogService.createCatalog(catalog);
-        System.out.println("--- Successfully added category---");
     }
 
     //Update category

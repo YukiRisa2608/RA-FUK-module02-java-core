@@ -18,7 +18,7 @@ public class Catalog implements Serializable {
     private boolean status;
 
 
-    private static Long ID = CatalogDaoImpl.getCatalogs().size() == 0 ? 1 : CatalogDaoImpl.getCatalogs().get(CatalogDaoImpl.getCatalogs().size() - 1).getCatalogId() + 1;
+//    private static Long ID = CatalogDaoImpl.getCatalogs().size() == 0 ? 1 : CatalogDaoImpl.getCatalogs().get(CatalogDaoImpl.getCatalogs().size() - 1).getCatalogId() + 1;
 
     public void input(){
         System.out.println("Enter name of category: ");
@@ -29,8 +29,8 @@ public class Catalog implements Serializable {
         this.status = InputMethods.getBoolean();
     }
 
-    public Catalog(String catalogName, String description, LocalDateTime createdDate, boolean status) {
-        this.catalogId = ID++;
+    public Catalog(Long id, String catalogName, String description, LocalDateTime createdDate, boolean status) {
+        this.catalogId = id;
         this.catalogName = catalogName;
         this.description = description;
         this.createdDate = createdDate;
@@ -38,7 +38,6 @@ public class Catalog implements Serializable {
     }
 
     public Catalog() {
-        this.catalogId = ID++;
         this.createdDate = LocalDateTime.now();
     }
 
