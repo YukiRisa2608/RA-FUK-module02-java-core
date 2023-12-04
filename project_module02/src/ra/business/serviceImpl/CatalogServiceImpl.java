@@ -20,11 +20,11 @@ public class CatalogServiceImpl implements ICatalogService {
     @Override
     public void createCatalog(Catalog catalog) {
         if (this.checkExistByCatalogName(catalog.getCatalogName())) {
-            System.out.println("Duplicate catalog name");
+            System.err.println("Duplicate catalog name");
             return;
         }
         catalogDao.add(catalog);
-        System.out.println("--- Successfully added category---");
+        System.out.println("\u001B[32m--- Successfully added category---\u001B[0m");
     }
 
     @Override

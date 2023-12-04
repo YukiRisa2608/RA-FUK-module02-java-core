@@ -23,11 +23,11 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public void createProduct(Product product) {
         if (this.checkExistByProductName(product.getProductName())) {
-            System.out.println("Teen san pham da ton tai");
+            System.err.println("Duplicate product name!");
             return;
         }
         productDao.add(product);
-        System.out.println("--- Successfully added product number ---");
+        System.out.println("\u001B[32m--- Successfully added product---\u001B[0m");
     }
 
     @Override

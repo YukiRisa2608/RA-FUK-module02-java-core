@@ -23,10 +23,10 @@ public class StoreManangement {
         home();
 
     }
-
+//******************************HOME MENU***********************************
     private static void home() {
         do {
-            System.out.println("=== MENU ===");
+            System.out.println("\u001B[31;46m=== HOME MENU ===\u001B[0m");
             System.out.println("1. Category Management");
             System.out.println("2. Product Management");
             System.out.println("0. Exit");
@@ -55,18 +55,19 @@ public class StoreManangement {
         } while (true);
     }
 
-    // xử li các chức năng của danh mục
+    //***********MENU CATALOG*******************************
+
     public static void menuCatalog() {
         byte choice;
         do {
-            System.out.println("=== MENU CATALOG ===");
+            System.out.println("\u001B[31;46m=== CATALOG MENU ===\u001B[0m");
             System.out.println("1. Show Catalogs");
             System.out.println("2. Add New Catalog");
             System.out.println("3. Update Catalog by ID");
             System.out.println("4. Delete Catalog by ID");
-            System.out.println("5. Search by catelog name");
+            System.out.println("5. Search by category name");
             System.out.println("6. Show/Hide catalog");
-            System.out.println("7. Home");
+            System.out.println("7. Home menu");
             System.out.println("0. Exit");
 
             System.out.println("Enter your choice:");
@@ -99,17 +100,19 @@ public class StoreManangement {
                     System.exit(0);
                     break;
                 default:
-                    System.out.println("invalid choice!! Try again");
+                    System.err.println("invalid choice!! Try again");
                     break;
             }
         } while (choice != 0);
     }
 
-    // xử lí các chức năng của sản phẩm
+
+//*********************MENU PRODUCT**************************************************************
+
     public static void menuProduct() {
         byte choice;
         do {
-            System.out.println("=== MENU PRODUCTS ===");
+            System.out.println("\u001B[31;46m=== PRODUCT MENU ===\u001B[0m");
             System.out.println("1. Show all products");
             System.out.println("2. Show products by category");
             System.out.println("3. Add Product");
@@ -117,8 +120,8 @@ public class StoreManangement {
             System.out.println("5. Delete Product");
             System.out.println("6. Update Status");
             System.out.println("7. Search By Product Name");
-            System.out.println("8. Filt by status");
-            System.out.println("9. Home");
+            System.out.println("8. Filter by status");
+            System.out.println("9. Home menu");
             System.out.println("0. Exit");
             System.out.println("Enter your choice:");
 
@@ -158,15 +161,14 @@ public class StoreManangement {
                     System.exit(0);
                     break;
                 default:
-                    System.out.println("invalid choice!! Try again.");
+                    System.err.println("invalid choice!! Try again.");
                     break;
             }
         } while (choice != 0);
     }
 
 
-///////////////////////////////////////////////////////////////////////////////////////
-    //Chức năng của product
+//**************PRODUCT FUNCTIONS*****************************************
 
     //Show product by category
     private static void showProductByCategory() {
@@ -174,7 +176,7 @@ public class StoreManangement {
         List<Catalog> catalogs = catalogService.findAllOrderByCreatedDate();
         displayCatalog(catalogs);
 
-        System.out.println("Enter Category ID to show: ");
+        System.out.println("Enter Category ID to show products: ");
         long category_id = InputMethods.getLong();
         List<Product> products = productService.findProductByCategoryId(category_id);
         displayProduct(products);
@@ -183,12 +185,12 @@ public class StoreManangement {
     //Show all products
     public static void displayProduct(List<Product> products) {
         if (products == null || products.size() == 0){
-            System.out.println("not found any product");
+            System.err.println("---Not found any product!!!---");
             return;
         }
-        System.out.printf("%-10s%-20s%-15s%-20s%-20s%-10s%-25s%-25s%-20s\n", "ID", "PRODUCT NAME", "CATEGORY ID", "DESCRIPTION", "UNIT PRICE", "STOCK", "CREAT AT", "UPDATE AT", "STATUS");
+        System.err.printf("%-10s%-20s%-15s%-20s%-20s%-10s%-25s%-25s%-20s\n", "ID", "PRODUCT NAME", "CATEGORY ID", "DESCRIPTION", "UNIT PRICE", "STOCK", "CREAT AT", "UPDATE AT", "STATUS");
         products.forEach(pro -> {
-            System.out.printf("%-10s%-20s%-15s%-20s%-20s%-10s%-25s%-25s%-20s\n", pro.getProductId() + "", pro.getProductName(), pro.getCategoryId(), pro.getDescription(), Formatter.getNumberFormatterVND(pro.getUnitPrice()), pro.getStock() + "", pro.getCreatedAt() + "", pro.getUpdatedAt(), pro.isStatus() ? "Available" : "Not Available");
+            System.out.printf("%-10s%-20s%-15s%-20s%-20s%-10s%-25s%-25s%-20s\n", pro.getProductId() + "", pro.getProductName(), pro.getCategoryId(), pro.getDescription(), Formatter.getNumberFormatterVND(pro.getUnitPrice()), pro.getStock() + "", pro.getCreatedAt() + "", pro.getUpdatedAt(), pro.isStatus() ? "\u001B[32mAvailable\u001B[0m" : "\u001B[31mNot Available\u001B[0m");
         });
     }
 
@@ -197,13 +199,13 @@ public class StoreManangement {
         Long catalog_id;
         Catalog catalogChoice;
         do {
-            System.out.println("=== SELECT CATEGORY TO ADD===");
+            System.out.println("\u001B[32m=== SELECT CATEGORY TO ADD===\u001B[0m");
             displayCatalog(catalogService.findAllOrderByCreatedDate());
-            System.out.println("Enter category ID you want to add: ");
+            System.out.println("Enter category ID you want to add product: ");
             catalog_id = InputMethods.getLong();
             catalogChoice = catalogService.findById(catalog_id);
             if (catalogChoice == null) {
-                System.out.println("Catalog không hợp lệ, hãy nhập lại!");
+                System.err.println("---Not found catagory ID: " + catalog_id + " . Please try again!!---");
             }
         } while (catalogChoice == null);
 
@@ -211,22 +213,21 @@ public class StoreManangement {
         System.out.println("Enter the quantity of products you want to add: ");
         n = InputMethods.getByte();
         for (int i = 0; i < n; i++) {
-            System.out.println("=== Enter information for product number " + (i + 1) + " ===");
+            System.out.println("=== \u001B[32mEnter information for product number\u001B[0m " + (i + 1) + " ===");
             Product product = new Product();
             product.input(catalogChoice.getCatalogId());
             product.setProductId(productService.getNewId());
             productService.createProduct(product);
-
         }
     }
 
-
+    //Update product
     private static void updateProduct() {
         System.out.println("Enter ID of product to update: ");
         long idUpdate = InputMethods.getLong();
         Product productUpdate = productService.findById(idUpdate);
         if (productUpdate == null) {
-            System.out.println("Not found product, try again.");
+            System.err.println("Not found product, try again.");
         } else {
             //update name
             String name;
@@ -235,7 +236,7 @@ public class StoreManangement {
                 name = InputMethods.getString();
                 boolean isDuplicateName = productService.checkExistByProductName(name);
                 if (isDuplicateName) {
-                    System.out.println("Duplicate name, try with an other name");
+                    System.err.println("Duplicate name, try with an other name");
                 } else {
                     break;
                 }
@@ -246,13 +247,13 @@ public class StoreManangement {
             Long catalog_id;
             Catalog catalogChoice;
             do {
-                System.out.println("=== SELECT CATEGORY TO ADD===");
+                System.out.println("\u001B[32m=== SELECT CATEGORY TO UPDATE===\u001B[0m");
                 displayCatalog(catalogService.findAllOrderByCreatedDate());
-                System.out.println("Enter category ID you want to add: ");
+                System.out.println("Enter category ID you want to update: ");
                 catalog_id = InputMethods.getLong();
                 catalogChoice = catalogService.findById(catalog_id);
                 if (catalogChoice == null) {
-                    System.out.println("Catalog không hợp lệ, hãy nhập lại!");
+                    System.err.println("Not found category with ID: " + catalog_id + ", try again!");
                 }
             } while (catalogChoice == null);
 
@@ -274,51 +275,54 @@ public class StoreManangement {
             productUpdate.setUpdatedAt(LocalDateTime.now());
 
             productService.updateProduct(productUpdate);
-            System.out.println("--- Successfully update category---");
+            System.out.println("\u001B[32m--- Successfully update category---\u001B[0m");
         }
     }
 
+    //Delete Product
     private static void deleteProduct() {
         System.out.println("Enter ID of product to delete: ");
         long idDelete = InputMethods.getLong();
         Product productDelete = productService.findById(idDelete);
         if (productDelete == null) {
-            System.out.println("Not found product with ID: " + idDelete);
+            System.err.println("Not found product with ID: " + idDelete);
         } else {
             productService.deleteByProductId(idDelete);
-            System.out.println("--- Successfully deleted category---");
+            System.out.println("\u001B[32m--- Successfully deleted category---\u001B[0m");
         }
     }
 
+    //Update status: available/ not available
     private static void updateStatus() {
-        System.out.println("Enter ID of product: ");
+        System.out.println("Enter ID of product to change status: ");
         long idUpdate = InputMethods.getLong();
         Product productUpdate = productService.findById(idUpdate);
         if (productUpdate == null) {
-            System.out.println("Not found product with id " + idUpdate);
+            System.err.println("Not found product with id " + idUpdate);
         } else {
-            System.out.println("Available (type true) or Unavailable(type false) Product: ");
+            System.out.println("Available (type true) or Not available(type false) Product: ");
             productUpdate.setStatus(InputMethods.getBoolean());
             productService.updateProduct(productUpdate);
-            System.out.println("Successfully!!!");
+            System.out.println("\u001B[32mChange Status Successfully!!!\u001B[0m");
         }
     }
 
+    //Search product by name
     private static void searchByProductName() {
         System.out.println("Enter name of product you want to search: ");
         String name = InputMethods.getString();
-        System.out.println("===FOUND LIST===");
+//        System.out.println("===FOUND LIST===");
         displayProduct(productService.searchByName(name));
     }
 
-
+    //Filter display product by status
     private static void filtByStatus() {
         byte statusChoice;
         do{
-            System.out.println(" === STATUS ===");
-            System.out.println("1. Available");
-            System.out.println("2. Unavailable");
-            System.out.println("Choice: ");
+            System.out.println("\u001B[32m=== FILTER ===\u001B[0m");
+            System.out.println("1. Show Available Products");
+            System.out.println("2. Show Not Available Products");
+            System.out.println("Enter your choice:");
             statusChoice = InputMethods.getByte();
         } while(statusChoice != 1 && statusChoice != 2);
 
@@ -329,16 +333,15 @@ public class StoreManangement {
         }
     }
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////
-//Chức năng cho Category
+ //*******************CATEGORY FUNCTIONS************************************************************************
 
     // Show all category
     public static void displayCatalog(List<Catalog> catalogs) {
         if (catalogs == null || catalogs.size() == 0){ //catalogs.isEmpty()
-            System.out.println("not found any catalogs");
+            System.err.println("Not found any catalogs!");
             return;
         }
-        System.out.printf("%-10s%-20s%-20s%-20s\n", "ID", "CATEGORY NAME", "DESCRIPTION", "CREAT AT");
+        System.err.printf("%-10s%-20s%-20s%-20s\n", "ID", "CATEGORY NAME", "DESCRIPTION", "CREAT AT");
         catalogs.forEach(cat -> {
             if (cat.isStatus())
                 System.out.printf("%-10s%-20s%-20s%-20s\n", cat.getCatalogId() + "", cat.getCatalogName(), cat.getDescription(), cat.getCreatedDate() + "");
@@ -359,7 +362,7 @@ public class StoreManangement {
         long idUpdate = InputMethods.getLong();
         Catalog catalogUpdate = catalogService.findById(idUpdate);
         if (catalogUpdate == null) {
-            System.out.println("Not found category, try again.");
+            System.err.println("Not found any category, try again!");
         } else {
             String name;
             do {
@@ -367,7 +370,7 @@ public class StoreManangement {
                 name = InputMethods.getString();
                 boolean isDuplicateName = catalogService.checkExistByCatalogName(name);
                 if (isDuplicateName) {
-                    System.out.println("Duplicate name, try with an other name");
+                    System.err.println("Duplicate name, try with an other name:");
                 } else {
                     break;
                 }
@@ -376,7 +379,7 @@ public class StoreManangement {
             System.out.println("Enter description of category to update: ");
             catalogUpdate.setDescription(InputMethods.getString());
             catalogService.updateCatalog(catalogUpdate);
-            System.out.println("--- Successfully update category---");
+            System.out.println("\u001B[32m--- Successfully update category---\u001B[0m");
         }
     }
 
@@ -386,33 +389,33 @@ public class StoreManangement {
         long idDelete = InputMethods.getLong();
         Catalog catalogDelete = catalogService.findById(idDelete);
         if (catalogDelete == null) {
-            System.out.println("Not found category with ID " + idDelete);
+            System.err.println("Not found category with ID " + idDelete);
         } else {
             catalogService.deleteByCatalogId(idDelete);
-            System.out.println("--- Successfully deleted category---");
+            System.out.println("\u001B[32m--- Successfully deleted category---\u001B[0m");
         }
     }
 
-    //Search catagory by name
+    //Search category by name
     private static void searchCatalogsByName() {
         System.out.println("Enter name of category you want to search: ");
         String name = InputMethods.getString();
-        System.out.println("===FOUND LIST===");
+//        System.out.println("===FOUND LIST===");
         displayCatalog(catalogService.searchByName(name));
     }
 
-    //Show or hide category
+    //Edit status: Show or hide category by id
     private static void showOrHideCatalogById() {
         System.out.println("Enter ID of category to show or hide: ");
         long idUpdate = InputMethods.getLong();
         Catalog catalogUpdate = catalogService.findById(idUpdate);
         if (catalogUpdate == null) {
-            System.out.println("Not found category with id " + idUpdate);
+            System.err.println("Not found category with id " + idUpdate);
         } else {
             System.out.println("Show (type true) or Hide(type false) Catalog: ");
             catalogUpdate.setStatus(InputMethods.getBoolean());
             catalogService.updateCatalog(catalogUpdate);
-            System.out.println("Successfully!!!");
+            System.out.println("\u001B[32m---Change Status Successfully!!!---\u001B[0m");
         }
     }
 }

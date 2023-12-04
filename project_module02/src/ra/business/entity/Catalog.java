@@ -21,10 +21,13 @@ public class Catalog implements Serializable {
 //    private static Long ID = CatalogDaoImpl.getCatalogs().size() == 0 ? 1 : CatalogDaoImpl.getCatalogs().get(CatalogDaoImpl.getCatalogs().size() - 1).getCatalogId() + 1;
 
     public void input(){
+
         System.out.println("Enter name of category: ");
         this.catalogName = InputMethods.getString();
+
         System.out.println("Enter description for category: ");
         this.description = InputMethods.getString();
+
         System.out.println("Enter status: Show (type true) or Hide(type false) ");
         this.status = InputMethods.getBoolean();
     }
