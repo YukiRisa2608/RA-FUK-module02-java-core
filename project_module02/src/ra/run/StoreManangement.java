@@ -45,7 +45,7 @@ public class StoreManangement {
                     break;
                 case 0:
                     // thoát
-                    System.out.println("Exiting...");
+                    System.err.println("Exiting...");
                     System.exit(0);
                     break;
                 default:
@@ -96,11 +96,11 @@ public class StoreManangement {
                     home();
                     break;
                 case 0:
-                    System.out.println("Exiting...");
+                    System.err.println("Exiting...");
                     System.exit(0);
                     break;
                 default:
-                    System.err.println("invalid choice!! Try again");
+                    System.err.println("Invalid choice. Try again!!");
                     break;
             }
         } while (choice != 0);
@@ -157,11 +157,11 @@ public class StoreManangement {
                     home();
                     break;
                 case 0:
-                    System.out.println("Exiting...");
+                    System.err.println("Exiting...");
                     System.exit(0);
                     break;
                 default:
-                    System.err.println("invalid choice!! Try again.");
+                    System.err.println("Invalid choice. Try again!!");
                     break;
             }
         } while (choice != 0);
@@ -288,7 +288,7 @@ public class StoreManangement {
             System.err.println("Not found product with ID: " + idDelete);
         } else {
             productService.deleteByProductId(idDelete);
-            System.out.println("\u001B[32m--- Successfully deleted category---\u001B[0m");
+            System.out.println("\u001B[32m--- Successfully deleted product---\u001B[0m");
         }
     }
 
